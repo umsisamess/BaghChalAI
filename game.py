@@ -46,6 +46,30 @@ class Game:
             tiger.make_a_tiger_move()
             self.no_of_moves_made += 1
 
+    def make_a_goat_move(self):
+        possible_moves = self.possible_goat_movess()
+        move_to_be_made = self.select_random(possible_moves)
+        if move_to_be_made[0] == -1:
+            self.boardgrid[move_to_be_made[2]][move_to_be_made[3]] = 'G'
+            self.goats_to_be_placed -= 1
+        else:
+            self.boardgrid[move_to_be_made[2]][move_to_be_made[3]] = 'G'
+            self.boardgrid[move_to_be_made[0]][move_to_be_made[1]] = '_'
+        
+
+
+    def make_a_tiger_move(self):
+        possible_moves = self.possible_tiger_movess()
+        move_to_be_made = self.select_random(possible_moves)
+
+        if abs(move_to_be_made[2]-move_to_be_made[0])==2 or abs(move_to_be_made[3]-move_to_be_made[1])==2:
+            self.boardgrid[move_to_be_made[2]][move_to_be_made[3]] = 'T'
+            self.boardgrid[(move_to_be_made[2]+move_to_be_made[0])//2][(move_to_be_made[3]+move_to_be_made[1])//2] = '_'
+            self.goats_killed += 1
+        else:
+            self.boardgrid[move_to_be_made[2]][move_to_be_made[3]] = 'T'
+            self.boardgrid[move_to_be_made[0]][move_to_be_made[1]] = '_'
+
     def play(self):
         self.__init__()
         
