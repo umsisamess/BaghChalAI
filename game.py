@@ -155,6 +155,7 @@ class Game:
         else:
             self.boardgrid[move_to_be_made[2]][move_to_be_made[3]] = 'G'
             self.boardgrid[move_to_be_made[0]][move_to_be_made[1]] = '_'
+        
 
 
     def make_a_tiger_move(self):
