@@ -23,39 +23,39 @@ class Goat:
         return pos_mo[random.randint(0,n-1)]
 
     def possible_goat_movess(self):
-        self.possible_goat_moves = []
+        possible_goat_moves = []
         if self.goats_to_be_placed > 0:
             for i in range(5):
                 for j in range(5):
                     if self.boardgrid[i][j]=='_':
-                        self.possible_goat_moves.append([-1,-1,i,j])
+                        possible_goat_moves.append([-1,-1,i,j])
         else:
             for i in range(5):
                 for j in range(5):
                     if self.boardgrid[i][j]=='G':
                         if i-1>=0:
                             if(self.boardgrid[i-1][j] == '_'):
-                                self.possible_goat_moves.append([i,j,i-1,j])
+                                possible_goat_moves.append([i,j,i-1,j])
                         if i+1<5:
                             if(self.boardgrid[i+1][j] == '_'):
-                                self.possible_goat_moves.append([i,j,i+1,j])
+                                possible_goat_moves.append([i,j,i+1,j])
                         if j-1>=0:
                             if(self.boardgrid[i][j-1] == '_'):
-                                self.possible_goat_moves.append([i,j,i,j-1])
+                                possible_goat_moves.append([i,j,i,j-1])
                         if j+1<5:
                             if(self.boardgrid[i][j+1] == '_'):
-                                self.possible_goat_moves.append([i,j,i,j+1])
+                                possible_goat_moves.append([i,j,i,j+1])
 
                         if i-1>=0 and j-1>=0 and i%2==j%2:
                             if(self.boardgrid[i-1][j-1] == '_'):
-                                self.possible_goat_moves.append([i,j,i-1,j-1])
+                                possible_goat_moves.append([i,j,i-1,j-1])
                         if i-1>=0 and j+1<5 and i%2==j%2:
                             if(self.boardgrid[i-1][j+1] == '_'):
-                                self.possible_goat_moves.append([i,j,i-1,j+1])
+                                possible_goat_moves.append([i,j,i-1,j+1])
                         if i+1<5 and j-1>=0 and i%2==j%2:
                             if(self.boardgrid[i+1][j-1] == '_'):
-                                self.possible_goat_moves.append([i,j,i+1,j-1])
+                                possible_goat_moves.append([i,j,i+1,j-1])
                         if i+1<5 and j+1<5 and i%2==j%2:
                             if(self.boardgrid[i-1][j-1] == '_'):
-                                self.possible_goat_moves.append([i,j,i+1,j+1])
-        return self.possible_goat_moves
+                                possible_goat_moves.append([i,j,i+1,j+1])
+        return possible_goat_moves

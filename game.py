@@ -22,6 +22,7 @@ class Game:
         self.goats_killed = 0
         self.tigers_trapped = 0
         self.no_of_moves_made = 0
+        self.best_move = None
         
         self.boardgrid = [['_' for _ in range(5)] for _ in range(5)]
         # Place tiger at corners
@@ -45,6 +46,50 @@ class Game:
             tiger = Tiger(self.boardgrid,self.tigers_trapped,self.goats_killed)
             tiger.make_a_tiger_move()
             self.no_of_moves_made += 1
+
+    def make_a_best_move(self):
+        if self.current_turn == "Goat":
+            self.make_a_best_goat_move()
+            print(self.boardgrid)
+        else:
+            self.make_a_best_tiger_move()
+            print(self.boardgrid)
+            self.no_of_moves_made += 1
+
+    def make_a_best_goat_move(self):
+        eval = Evaluation(self.goats_killed,self.tigers_trapped,self.boardgrid,self.winner, self.goats_to_be_placed,self.best_move)
+        # print(self.best_move)
+        eval.minimax(False)
+        self.make_move_goat(eval.best_move)
+
+    def make_a_best_tiger_move(self):
+        eval = Evaluation(self.goats_killed,self.tigers_trapped,self.boardgrid,self.winner, self.goats_to_be_placed,self.best_move)
+        eval.minimax(True)
+        self.make_move_tiger(eval.best_move)
+
+    def make_move_goat(self,move_to_be_made):
+        if len(move_to_be_made)==0:
+            print('ok')
+            return
+        if move_to_be_made[0] == -1:
+            self.boardgrid[move_to_be_made[2]][move_to_be_made[3]] = 'G'
+            self.goats_to_be_placed -= 1
+        else:
+            self.boardgrid[move_to_be_made[2]][move_to_be_made[3]] = 'G'
+            self.boardgrid[move_to_be_made[0]][move_to_be_made[1]] = '_'
+
+    def make_move_tiger(self,move_to_be_made):
+        if len(move_to_be_made)==0:
+            return
+        if abs(move_to_be_made[2]-move_to_be_made[0])==2 or abs(move_to_be_made[3]-move_to_be_made[1])==2:
+            self.boardgrid[move_to_be_made[2]][move_to_be_made[3]] = 'T'
+            self.boardgrid[(move_to_be_made[2]+move_to_be_made[0])//2][(move_to_be_made[3]+move_to_be_made[1])//2] = '_'
+            self.boardgrid[move_to_be_made[0]][move_to_be_made[1]] = '_'
+            self.goats_killed += 1
+        else:
+            self.boardgrid[move_to_be_made[2]][move_to_be_made[3]] = 'T'
+            self.boardgrid[move_to_be_made[0]][move_to_be_made[1]] = '_'
+
 
     def make_a_goat_move(self):
         possible_moves = self.possible_goat_movess()
@@ -75,7 +120,9 @@ class Game:
         
         while self.is_game_over() == False:
             self.make_a_move()
+            # self.make_a_best_move()
             self.switch_turn()
+        
         print(self.no_of_moves_made)
         if self.winner == "Goat":
             print("Goat has won the game")
@@ -106,15 +153,19 @@ class Game:
             return True
         return False
 
+    def select_random(self,pos_mo):
+        n = len(pos_mo)
+        return pos_mo[random.randint(0,n-1)]
+
     def is_game_over(self):
         if self.is_tiger_winner():
             self.winner = "Tiger" 
             return True
         elif self.is_goat_winner():
             self.winner = "Goat"
-            print(self.boardgrid)   
+            # print(self.boardgrid)   
             return True
-        elif self.no_of_moves_made==300:
+        elif self.no_of_moves_made==1000:
             self.winner = None
             return True
         else:
@@ -125,7 +176,7 @@ class Game:
 
 game = Game()
 game.initi()
-i = 10
+i = 1000
 
 while(i):
     game.play()
