@@ -46,17 +46,11 @@ class Game:
             tiger.make_a_tiger_move()
             self.no_of_moves_made += 1
 
-    def select_random(self,pos_mo):
-        n = len(pos_mo)
-        return pos_mo[random.randint(0,n-1)]
-
     def play(self):
         self.__init__()
         
         while self.is_game_over() == False:
             self.make_a_move()
-            # print(self.evaluation())
-            # self.update_the_position()
             self.switch_turn()
         print(self.no_of_moves_made)
         if self.winner == "Goat":
@@ -107,7 +101,7 @@ class Game:
 
 game = Game()
 game.initi()
-i = 1000
+i = 10
 
 while(i):
     game.play()

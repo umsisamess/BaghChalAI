@@ -47,8 +47,6 @@ class Evaluation:
 
             goat = Goat(self.boardgrid,self.goats_to_be_placed)
             for move in goat.possible_goat_movess():
-                board = self.boardgrid
-                goat = Goat(self.boardgrid,self.goats_to_be_placed)
                 goat.make_move_goat(move)
                 current_value = self.minimax(True, depth + 1, alpha, beta)
                 beta = min(beta, current_value)
@@ -72,7 +70,6 @@ class Evaluation:
             tiger = Tiger(self.boardgrid,self.tigers_trapped,self.goats_killed)
             for move in tiger.possible_tiger_movess():
                 board = self.boardgrid
-                tiger = Tiger(self.boardgrid,self.tigers_trapped,self.goats_killed)
                 tiger.make_move_tiger(move)
                 current_value = self.minimax(False, depth + 1, alpha, beta)
                 alpha = max(alpha, value)
